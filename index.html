@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+</head>
+<body>
+    <h1>Image Classification</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="fileInput" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            resultDiv.textContent = 'Loading...';
+
+            const formData = new FormData();
+            formData.append('fileInput', fileInput.files[0]);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent = `Prediction: ${data.prediction}`;
+                } else {
+                    throw new Error('Failed to receive response from server');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = 'An error occurred';
+            }
+        });
+    </script>
+</body>
+</html>
