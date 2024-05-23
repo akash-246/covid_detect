@@ -16,7 +16,7 @@ preprocess = transforms.Compose([
 ])
 
 # Define class labels
-custom_labels = {0: 'covid', 1: 'viral', 2: 'pneumonia'}  # Define your custom class labels
+custom_labels = {0: 'covid', 1: 'viral', 2: 'normal'}  # Define your custom class labels
 
 # Load your custom model
 model = torch.load("/Users/akashjindal/Desktop/covid.pkl", map_location=torch.device('cpu'))  # Replace 'path_to_your_model.pkl' with the path to your model file
